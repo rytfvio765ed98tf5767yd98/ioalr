@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inside of a locked room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Coolvetica&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-size: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: 'Coolvetica', sans-serif;
+            padding: 20px;
+            box-sizing: border-box;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            text-align: left;
+            padding: 0 20px;
+            margin: auto;
+        }
+        .text {
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        .word {
+            opacity: 0;
+            display: inline-block;
+            white-space: pre;
+        }
+        .arrow {
+            display: inline-block;
+            font-size: 30px;
+            color: white;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeInArrow 20s forwards, blink 2.5s infinite 17s;
+            cursor: pointer;
+        }
+        @keyframes fadeInArrow {
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes blink {
+            0%, 50%, 100% {
+                opacity: 1;
+            }
+            25%, 75% {
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 10px;
+            }
+            .text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text" id="text">
+            "Back to Day One" is a proposition to stop for a moment and try to reconstruct our personal definitions of the reality we're surrounded by - the reality from which the majority of people have cut ties. <br>
+            We live in artificially created worlds, almost not acknowledging the existence of the one that dictates whether we are able to exist or not. We actively attribute the highest priority to anguish, whose presence is dependent only on one's mind. <br>
+            Currently, it seems like society is in constant search of things that make a person stand out, completely overlooking the beauty that lies in oneness with the rest of the world (or it remains intentionally ignored).
+            <br><br>
+            <a href="backtodayone3.html" class="arrow">✦</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textContainer = document.getElementById('text');
+            const originalText = `"Back to Day One" is a proposition to stop for a moment and try to reconstruct our personal definitions of the reality we're surrounded by - the reality from which the majority of people have cut ties. We live in artificially created worlds, almost not acknowledging the existence of the one that dictates whether we are able to exist or not. We actively attribute the highest priority to anguish, whose presence is dependent only on one's mind. Currently, it seems like society is in constant search of things that make a person stand out, completely overlooking the beauty that lies in oneness with the rest of the world (or it remains intentionally ignored).`;
+            const words = originalText.split(' ').map(word => `<span class="word">${word} </span>`);
+            textContainer.innerHTML = words.join('') + '<br><br><a href="backtodayone3.html" class="arrow">✦</a>';
+
+            const wordElements = textContainer.querySelectorAll('.word');
+            const arrow = document.querySelector('.arrow');
+
+            wordElements.forEach((word, index) => {
+                setTimeout(() => {
+                    word.style.opacity = '1';
+                    word.style.transition = 'opacity 0.5s';
+                }, index * 150);
+            });
+
+            setTimeout(() => {
+                arrow.style.opacity = '1';
+                arrow.style.transition = 'opacity 1.5s';
+            }, wordElements.length * 150 + 500); 
+        });
+    </script>
+</body>
+</html>

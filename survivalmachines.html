@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    
+    <link rel="icon" href="favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inside of a locked room</title>
+    <style>
+
+    @font-face {
+      font-family: 'Swansea Regular';
+      font-style: normal;
+      font-weight: normal;
+      src: local('Swansea Regular'), url('SWANSE__.woff') format('woff');
+      font-display: block;
+    }
+        body {
+	    font-family: 'Swansea Regular', Arial, sans-serif;
+            min-height: 100vh;
+            background-color: black;
+            display: grid;
+            grid-template-columns: 1fr auto; /* Pierwsza kolumna na okno, druga na rolkę */
+            align-items: center; /* Wyśrodkowanie elementów w pionie */
+            margin: 0;
+	    animation: fadeIn 1s;
+        }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+        .popup {
+            background: #000000;
+            border-radius: 12px;
+            aspect-ratio: 1; /* Proporcje 1:1 */
+            width: 70%; /* 70% wysokości rolki */
+            max-width: 90vmin; /* Maksymalna szerokość dostosowana do ekranu */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            justify-self: end; /* Przybliżenie okna do środka (z lewej strony) */
+            margin-right: 1%; /* Dodanie odstępu od środka */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+        }
+
+        .popup img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+    	    opacity: 1;
+    	    transition: opacity 0.3s ease-in-out;
+	    animation: blink 1s;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            width: 100%;
+            max-width: 300px;
+            max-height: 100vh; /* Rolka zajmuje maksymalnie 90% wysokości ekranu */
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            margin-right: 5%; /* Przesunięcie rolki bliżej prawej krawędzi */
+    	    opacity: 0.3;
+    	    transition: opacity 0.6s ease-in-out;
+	    
+        }
+
+        ul::-webkit-scrollbar {
+            width: 8px;
+	    
+        }
+
+        ul::-webkit-scrollbar-thumb {
+            background: hsl(0, 0%, 0%);
+            border-radius: 4px;
+        }
+
+ul:hover {
+    opacity: 1;
+}
+
+        li {
+            width: clamp(20px, 18vmin, 250px); /* Rozmiar kafelków */
+            aspect-ratio: 1;
+            background: #000000;
+            border-radius: 12px;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        li img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+/* Domyślny efekt rozjaśnienia */
+.popup img, ul {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Efekt wygaszenia obrazu podczas najechania na rolkę */
+ul:hover ~ .popup img {
+    opacity: 0.3;
+}
+
+/* Efekt wygaszenia rolki po kliknięciu obrazu */
+ul.dimmed {
+    opacity: 0.3;
+}
+
+.popup img.bright {
+    opacity: 1;
+    animation: blink3 0.27s infinite;
+}
+
+
+li img {
+    animation: blink2 0.33s infinite;
+}
+
+
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            25% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 1;
+            }
+	    75% {
+		opacity: 0.8;
+	    }
+	    100% {
+		opacity: 1;
+	    }
+        }
+
+        @keyframes blink2 {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.96;
+            }
+            100% {
+                opacity: 1;
+	    }
+        }
+
+        @keyframes blink3 {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.98;
+            }
+            100% {
+                opacity: 1;
+	    }
+        }
+
+@keyframes flashEffect {
+    0% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+    15% {
+        opacity: 0.6;
+        filter: brightness(2.5);
+    }
+    30% {
+        opacity: 0.9;
+        filter: brightness(1.5);
+    }
+    50% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+}
+
+
+.popup img.flash {
+    animation: flashEffect 0.3s ease-in-out;
+}
+
+.header-text {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    color: white;
+    max-width: 300px;
+    text-align: left;
+    animation: blink 1s;
+}
+
+.header-text h2 {
+    position: absolute;
+    font-size: 0.9rem;
+    top: 8%;
+    left: 0%;
+    color: #DCDCDC;
+    max-width: 300px;
+    text-align: left;
+animation: blink 1s;
+}
+
+.header-text p {
+    color: #808080; /* Ciemniejszy odcień szarości */
+    font-size: 0.8rem;
+    line-height: 1.6;
+    text-align: justify;
+    max-width: 700px;
+    margin-bottom: 1rem;
+
+}
+
+#description-toggle {
+    display: none;
+    color: #DCDCDC;
+    font-size: 0.8rem;
+    cursor: pointer;
+    animation: blink4 1s infinite;
+}
+
+        /* Media queries dla urządzeń mobilnych */
+        @media (max-width: 768px) {
+            ul::-webkit-scrollbar {
+                width: 4px; /* Zmniejszono szerokość paska przewijania */
+            }
+
+            ul::-webkit-scrollbar-thumb {
+                background: hsl(0, 0%, 50%);
+            }
+
+    .popup {
+        width: 90%; /* Obraz dostosowany do szerokości ekranu */
+        max-width: 100%;
+        margin: 0 auto 1rem auto; /* Wyśrodkowanie z dodatkowym marginesem od rolki */
+        justify-self: start; /* Przesunięcie obrazu bardziej na lewo */
+        margin-left: 5%; /* Margines od lewej strony */
+	order: 2;
+	
+    }
+
+    #description-toggle {
+        display: inline;
+    }
+            ul {
+                max-width: 250px; /* Rolka węższa na telefonach */
+		order: 3;
+		
+            }
+
+        li {
+            width: clamp(80px, 20vmin, 250px); /* Rozmiar kafelków */
+            aspect-ratio: 1;
+            background: #000000;
+            border-radius: 12px;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+@media (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-text {
+        position: static;
+        text-align: center;
+        max-width: 90%;
+        margin-bottom: 1rem;
+    }
+
+.header-text h2 {
+        position: static;
+        text-align: center;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+
+@keyframes blink4 {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.15; }
+    100% { opacity: 0.2; }
+}
+
+.header-text p {
+	display: none;
+}
+
+    .popup {
+        order: 2;
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        order: 3;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        max-width: 90%;
+        padding-bottom: 10px; /* Zapobieganie cięciu dolnej krawędzi */
+    }
+
+    li {
+        flex: 0 0 auto;
+    }
+
+ul::-webkit-scrollbar {
+    height: 4px; /* Zmniejszenie wysokości paska */
+}
+
+ul::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2); /* Półprzezroczysty pasek */
+    border-radius: 4px;
+}
+
+
+    #description-toggle {
+        display: inline;
+    }
+}
+
+
+
+
+
+:root {
+    --clr-1: #404040;
+    --clr-2: #909090;
+    --clr-3: #696969;
+    --clr-4: #FFFFFF;
+    --blur: 1.5rem;
+  }
+
+  .aurora {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    mix-blend-mode: darken;
+    pointer-events: none;
+  }
+
+  .aurora__item {
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    background-color: var(--clr-1);
+    border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+    filter: blur(var(--blur));
+    mix-blend-mode: overlay;
+  }
+
+  .aurora__item:nth-of-type(1) {
+    top: -50%;
+    animation: aurora-border 1s ease-in-out infinite,
+      aurora-1 3s ease-in-out infinite alternate;
+  }
+
+  .aurora__item:nth-of-type(2) {
+    background-color: var(--clr-3);
+    right: 0;
+    top: 0;
+    animation: aurora-border 1s ease-in-out infinite,
+      aurora-2 3s ease-in-out infinite alternate;
+  }
+
+  .aurora__item:nth-of-type(3) {
+    background-color: var(--clr-2);
+    left: 0;
+    bottom: 0;
+    animation: aurora-border 6s ease-in-out infinite,
+      aurora-3 3s ease-in-out infinite alternate;
+  }
+
+  .aurora__item:nth-of-type(4) {
+    background-color: var(--clr-4);
+    right: 0;
+    bottom: -50%;
+    animation: aurora-border 2s ease-in-out infinite,
+      aurora-4 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes aurora-1 {
+    0% { top: 0; right: 0; }
+    60% { top: 100%; right: 75%; }
+    100% { top: 0; right: 0; }
+  }
+
+  @keyframes aurora-2 {
+    0% { top: -50%; left: 0%; }
+    60% { top: 100%; left: 75%; }
+    100% { top: -50%; left: 0%; }
+  }
+
+  @keyframes aurora-3 {
+    0% { bottom: 0; left: 0; }
+    40% { bottom: 100%; left: 75%; }
+    100% { bottom: 0; left: 0; }
+  }
+
+  @keyframes aurora-4 {
+    0% { bottom: -50%; right: 0; }
+    50% { bottom: 0%; right: 40%; }
+    100% { bottom: -50%; right: 0; }
+  }
+
+  @keyframes aurora-border {
+    0% { border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%; }
+    50% { border-radius: 57% 23% 47% 72% / 63% 17% 66% 33%; }
+    100% { border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%; }
+  }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header-text">
+    <h1>survival machines</h1>
+    <h2>2024</h2>
+<br>
+
+<span id="description-toggle">[description]</span>
+
+<br>
+
+    <p>"Me" - what does it mean?
+This question may seem trivial and ubiquitous even though still no clear answer came into existence. Name? Given. Body? Named, and moreover, described as "one's own". As we understand it, the animal kingdom (excluding us in this instance) hasn't even allowed this concept near the gates of consciousness - or so we think. Is it safe to assume then that these beings slide through life with ease compared to... us? 
+
+While this piece of text above might evoke weariness or even dismay, one clear notion emerges: all organisms capable of registering each other's presence share one common denominator - a mechanism. Meanwhile, the world serves as both an EXPO and a testing ground, where every being has an opportunity to showcase the results of their creativity in the wake of certain conditions imposed by the environment.
+
+This project is a bow to the process mentioned above and even an allegory of a being subjected to time and contingency, that contemplates the beauty of the monument erected by his executioner and host.</p>
+</div>
+
+
+    <!-- Okienko 1:1 po lewej stronie -->
+<div class="popup">
+    <img id="mainImage" src="projects/photography/survivalmachines/sm-idle.webp" alt="Domyślny obraz" />
+</div>
+
+
+    <!-- Rolka po prawej stronie -->
+    <ul>
+        <li><img src="projects/photography/survivalmachines/sm1.webp" alt="Obraz 1" /></li>
+        <li><img src="projects/photography/survivalmachines/sm2.webp" alt="Obraz 2" /></li>
+        <li><img src="projects/photography/survivalmachines/sm3.webp" alt="Obraz 3" /></li>
+        <li><img src="projects/photography/survivalmachines/sm4.webp" alt="Obraz 4" /></li>
+        <li><img src="projects/photography/survivalmachines/sm5.webp" alt="Obraz 5" /></li>
+ 	<li><img src="projects/photography/survivalmachines/sm6.webp" alt="Obraz 6" /></li>
+        <li><img src="projects/photography/survivalmachines/sm7.webp" alt="Obraz 7" /></li>
+        <li><img src="projects/photography/survivalmachines/sm8.webp" alt="Obraz 8" /></li>
+        <li><img src="projects/photography/survivalmachines/sm9.webp" alt="Obraz 9" /></li>
+        <li><img src="projects/photography/survivalmachines/sm10.webp" alt="Obraz 10" /></li>
+	<li><img src="projects/photography/survivalmachines/sm11.webp" alt="Obraz 11" /></li>
+        <li><img src="projects/photography/survivalmachines/sm12.webp" alt="Obraz 12" /></li>
+        <li><img src="projects/photography/survivalmachines/sm13.webp" alt="Obraz 13" /></li>
+       
+    </ul>
+
+    <script>
+
+// Pobranie elementu głównego obrazu
+const mainImage = document.getElementById('mainImage');
+const thumbnails = document.querySelectorAll('ul li img');
+const ul = document.querySelector('ul');
+
+// Zdarzenie: kliknięcie na miniaturkę
+thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+        // Ustawienie obrazu w popupie
+        mainImage.src = thumbnail.src;
+        mainImage.alt = thumbnail.alt;
+
+        mainImage.classList.add('flash');
+        setTimeout(() => {
+            mainImage.classList.remove('flash');
+        }, 300);
+
+        // Rozjaśnienie obrazu
+        mainImage.classList.add('bright');
+
+        // Rolka pozostaje przyciemniona
+        ul.classList.add('dimmed');
+    });
+});
+
+
+
+// Zdarzenie: najechanie myszą na rolkę
+ul.addEventListener('mouseover', () => {
+    // Rozjaśnienie rolki
+    ul.classList.remove('dimmed');
+});
+
+// Zdarzenie: opuszczenie myszki z rolki
+ul.addEventListener('mouseout', () => {
+    // Przyciemnienie rolki
+    ul.classList.add('dimmed');
+});
+
+document.getElementById('description-toggle').addEventListener('click', function() {
+    let description = document.querySelector('.header-text p');
+    if (description.style.display === 'none' || description.style.display === '') {
+        description.style.display = 'block';
+    } else {
+        description.style.display = 'none';
+    }
+});
+
+
+    </script>
+</body>
+
+</html>

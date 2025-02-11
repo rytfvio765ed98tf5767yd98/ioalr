@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>inside of a locked room</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/gsap.min.js"></script>
+
+
+  <style>
+
+#main-content {
+  animation: fadeIn 6.9s;
+}
+    @font-face {
+      font-family: 'Swansea Regular';
+      font-style: normal;
+      font-weight: normal;
+      src: local('Swansea Regular'), url('SWANSE__.woff') format('woff');
+    }
+
+    @font-face {
+      font-family: 'MsPaintMouse';
+      src: url('MsPaintMouse-Regular.otf') format('opentype');
+    }
+
+    body {
+      background-color: #000000;
+      margin: 0;
+      overflow: hidden;
+      animation: fadeIn 6.9s;
+    }
+
+html, body {
+  overflow-x: hidden; 
+  margin: 0;
+  padding: 0;
+  width: 100%; 
+  height: 100%; 
+}
+
+
+* {
+  box-sizing: border-box; 
+}
+
+    #sky {
+      height: 100vh;
+      position: relative;
+      opacity: 1; 
+      transition: opacity 2s ease-in-out; 
+    }
+
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+
+
+
+#sky, canvas {
+  width: 100vw; 
+  height: 100vh; 
+  overflow: hidden; 
+}
+
+
+
+
+    h1 {
+      font-family: 'Swansea Regular', Arial, sans-serif;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+    }
+
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #loading-star {
+      font-family: 'Swansea Regular', Arial, sans-serif;
+      font-size: 2rem;
+      color: white;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 0.9;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0.9;
+      }
+    }
+
+    :root {
+      --bg: #000000;
+      --clr-1: #404040;
+      --clr-2: #909090;
+      --clr-3: #696969;
+      --clr-4: #FFFFFF;
+
+      --blur: 1.5rem;
+      --fs: 1.5rem;
+    }
+
+    .title {
+      font-size: var(--fs);
+      font-weight: 800;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      margin: 0;
+      color: white;
+      text-align: center;
+      animation: blink 0.33s infinite;
+    }
+
+    .aurora {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      mix-blend-mode: darken;
+      pointer-events: none;
+    }
+
+    .aurora__item {
+      overflow: hidden;
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      background-color: var(--clr-1);
+      border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+      filter: blur(var(--blur));
+      mix-blend-mode: overlay;
+    }
+
+    .aurora__item:nth-of-type(1) {
+      top: -50%;
+      animation: aurora-border 1s ease-in-out infinite,
+        aurora-1 3s ease-in-out infinite alternate;
+    }
+
+    .aurora__item:nth-of-type(2) {
+      background-color: var(--clr-3);
+      right: 0;
+      top: 0;
+      animation: aurora-border 1s ease-in-out infinite,
+        aurora-2 3s ease-in-out infinite alternate;
+    }
+
+    .aurora__item:nth-of-type(3) {
+      background-color: var(--clr-2);
+      left: 0;
+      bottom: 0;
+      animation: aurora-border 6s ease-in-out infinite,
+        aurora-3 3s ease-in-out infinite alternate;
+    }
+
+    .aurora__item:nth-of-type(4) {
+      background-color: var(--clr-4);
+      right: 0;
+      bottom: -50%;
+      animation: aurora-border 2s ease-in-out infinite,
+        aurora-4 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes aurora-1 {
+  0% { top: 0; right: 0; }
+  60% { top: 100%; right: 75%; } 
+  100% { top: 0; right: 0; }
+}
+
+
+      50% {
+        top: 100%;
+        right: 75%;
+      }
+
+      75% {
+        top: 100%;
+        right: 25%;
+      }
+
+      100% {
+        top: 0;
+        right: 0;
+      }
+    }
+
+    @keyframes aurora-2 {
+      0% {
+        top: -50%;
+        left: 0%;
+      }
+
+      60% {
+        top: 100%;
+        left: 75%;
+      }
+
+      85% {
+        top: 100%;
+        left: 25%;
+      }
+
+      100% {
+        top: -50%;
+        left: 0%;
+      }
+    }
+
+    @keyframes aurora-3 {
+      0% {
+        bottom: 0;
+        left: 0;
+      }
+
+      40% {
+        bottom: 100%;
+        left: 75%;
+      }
+
+      65% {
+        bottom: 40%;
+        left: 50%;
+      }
+
+      100% {
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    @keyframes aurora-4 {
+      0% {
+        bottom: -50%;
+        right: 0;
+      }
+
+      50% {
+        bottom: 0%;
+        right: 40%;
+      }
+
+      90% {
+        bottom: 50%;
+        right: 25%;
+      }
+
+      100% {
+        bottom: -50%;
+        right: 0;
+      }
+    }
+
+    @keyframes aurora-border {
+      0% {
+        border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+      }
+
+      25% {
+        border-radius: 47% 29% 39% 49% / 61% 19% 66% 26%;
+      }
+
+      50% {
+        border-radius: 57% 23% 47% 72% / 63% 17% 66% 33%;
+      }
+
+      75% {
+        border-radius: 28% 49% 29% 100% / 93% 20% 64% 25%;
+      }
+
+      100% {
+        border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+      }
+    }
+
+.links {
+  font-family: 'Swansea Regular', Arial, sans-serif;
+  font-size: 0.7rem;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  z-index: 2;
+  gap: 5px; 
+}
+
+
+.links a {
+  font-family: 'MsPaintMouse', Arial, sans-serif;
+  color: #808080;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin: 0 5px;
+  display: inline-block; 
+}
+
+.links a:hover {
+  color: #FFFFFF;
+}
+
+    .left {
+      text-align: left;
+      flex: 1;
+      padding-left: 10px;
+    }
+
+    .right {
+      text-align: right;
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+
+
+.video-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px; 
+  height: auto; 
+  max-width: 90%; 
+  z-index: 3; 
+  overflow: hidden; 
+}
+
+.video-container video {
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+}
+
+
+@media screen and (max-width: 768px) {
+  .links {
+    font-family: 'Swansea Regular', Arial, sans-serif;
+    font-size: 0.6rem;
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    position: absolute;
+    top: calc(20px + 2rem); 
+    left: 50%;
+    transform: translateX(-50%); 
+    z-index: 2;
+  }
+
+  .links .left,
+  .links .right {
+    text-align: center;
+    flex: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .links a {
+    font-family: 'MsPaintMouse', Arial, sans-serif;
+    color: #808080;
+    text-decoration: none;
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .links a:hover {
+    color: #FFFFFF;
+  }
+}
+
+
+    .mobile-link {
+      display: none; 
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Swansea Regular', Arial, sans-serif;
+      color: white;
+      font-size: 0.5rem;
+      text-decoration: none;
+      text-align: center;
+      z-index: 10;
+    }
+
+    @keyframes blink-m {
+      0% {
+        opacity: 0.25;
+      }
+      25% {
+        opacity: 0.4;
+      }
+      50% {
+        opacity: 0.35;
+      }
+      75% {
+	opacity: 0.25;
+      }
+      100% {
+	opacity: 0.4;
+    }
+}
+    @media screen and (max-width: 768px) {
+      .mobile-link {
+        display: block; 
+        animation: blink-m 0.7s infinite;
+      }
+    }
+
+.video-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: auto;
+  max-width: 90%;
+  z-index: 3;
+  overflow: hidden;
+    opacity: 0; 
+    animation: fadeIn 1.5s ease-in-out 7s forwards;
+}
+
+
+.gif-element {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+
+@media screen and (max-width: 768px) {
+  .video-element {
+    display: none;
+  }
+
+  .gif-element {
+    display: block;
+    opacity: 0; 
+    animation: fadeIn 1.5s ease-in-out 7s forwards;
+  }
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Loading screen -->
+  <div id="loading-screen">
+    <div id="loading-star">✦</div>
+  </div>
+
+  <canvas id="background"></canvas>
+  <h1 class="title">
+    inside of a locked room
+    <div class="aurora">
+      <div class="aurora__item"></div>
+      <div class="aurora__item"></div>
+      <div class="aurora__item"></div>
+      <div class="aurora__item"></div>
+    </div>
+  </h1>
+
+  <div class="links">
+    <div class="left">
+      <a href="about.html">about</a>
+      <a href="contact.html">contact</a>
+    </div>
+    <div class="right">
+      <a href="projects.html">projects</a>
+      <a href="archive.html">archive</a>
+    </div>
+  </div>
+
+
+<div class="video-container">
+  <video autoplay muted loop loading="lazy" class="video-element">
+    <source src="misc/visuals/visual-index.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <img src="misc/visuals/visual-index.gif" alt="GIF animation" class="gif-element">
+</div>
+
+
+
+
+
+<a href="message.html" class="mobile-link">a short message for phone users [click me]</a>
+  <div id="sky"></div>
+
+<script>
+  // Ustawienie czasu na 5 sekund po zakończeniu ekranu ładowania
+  setTimeout(() => {
+    const videoContainer = document.getElementById('video-container');
+    videoContainer.style.visibility = 'visible'; // Ustaw widoczność na widoczne
+    videoContainer.style.transition = 'opacity 0.5s'; // Dodanie płynnego przejścia
+    videoContainer.style.opacity = '1'; // Ustaw przezroczystość na pełną
+  }, 5000); // Po 5 sekundach od rozpoczęcia
+
+  const loadingScreen = document.getElementById('loading-screen');
+
+function removeLoadingScreen() {
+  gsap.to(loadingScreen, {
+    opacity: 0,
+    duration: 1,
+    onComplete: () => {
+      loadingScreen.style.display = 'none';
+      // Teraz po zakończeniu animacji, opóźniamy wyświetlenie wideo
+      setTimeout(() => {
+        const videoContainer = document.getElementById('video-container');
+        videoContainer.style.visibility = 'visible'; 
+        videoContainer.style.transition = 'opacity 0.5s'; 
+        videoContainer.style.opacity = '1'; 
+      }, 5000); // Opóźnienie 5 sekund po zakończeniu animacji ładowania
+    }
+  });
+}
+
+
+  // Minimalny czas trwania loading screen
+  const minLoadingTime = 3000;
+
+  // Ustawienie czasu, w którym loading screen się kończy
+  const loadingStart = performance.now();
+
+  // Gdy strona się w pełni załaduje
+  window.addEventListener('load', () => {
+    const loadingEnd = performance.now();
+    const loadingDuration = loadingEnd - loadingStart;
+
+    if (loadingDuration < minLoadingTime) {
+      // Jeśli ładowanie trwało mniej niż 3 sekundy, czekaj na zakończenie animacji
+      setTimeout(removeLoadingScreen, minLoadingTime - loadingDuration);
+    } else {
+      // Usuń ekran ładowania natychmiast
+      removeLoadingScreen();
+    }
+  });
+
+  // Tło gwiazd
+  const maxStars = 100;
+  const starsPerLayer = 5;
+  const starLifetime = 10;
+  const staticStarCount = 30;
+
+  let activeStars = [];
+  let staticStars = [];
+
+  const canvas = document.getElementById('background');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  function drawStaticStars() {
+    for (let i = 0; i < staticStarCount; i++) {
+      const star = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 0.5 + 0.3,
+        opacity: Math.random() * 0.5 + 0.3
+      };
+      staticStars.push(star);
+    }
+
+    staticStars.forEach(star => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  function makeStarsTwinkle() {
+    staticStars.forEach(star => {
+      if (Math.random() > 0.7) {
+        star.opacity = Math.random() * 0.5 + 0.3;
+      }
+    });
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    staticStars.forEach(star => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(makeStarsTwinkle); // Zamiast setInterval
+  }
+
+  drawStaticStars();
+  makeStarsTwinkle();
+
+  function createStars(numStars) {
+    while (activeStars.length < maxStars) {
+      drawStar();
+    }
+  }
+
+  function drawStar() {
+    const tmpStar = document.createElement('div');
+    tmpStar.className = 'star';
+
+    tmpStar.style.top = '50%';
+    tmpStar.style.left = '50%';
+
+    const size = Math.random() * 1.8 + 0.5;
+    tmpStar.style.width = size + 'px';
+    tmpStar.style.height = size + 'px';
+
+    document.getElementById('sky').appendChild(tmpStar);
+
+    const duration = Math.max(Math.random() * 10 + 5, size * 5);
+
+    gsap.fromTo(tmpStar, {
+      scale: 0,
+      x: 0,
+      y: 0,
+      opacity: 1
+    }, {
+      scale: Math.random() * 2 + 1,
+      x: (Math.random() - 0.5) * window.innerWidth * 3,
+      y: (Math.random() - 0.5) * window.innerHeight * 3,
+      opacity: 1,
+      duration: duration,
+      ease: "none",
+      onComplete: () => {
+        gsap.to(tmpStar, {
+          opacity: 0,
+          duration: 0.6,
+          onComplete: () => tmpStar.remove()
+        });
+
+        activeStars = activeStars.filter(star => star !== tmpStar);
+      }
+    });
+
+    activeStars.push(tmpStar);
+  }
+
+  createStars(starsPerLayer);
+
+  setInterval(() => {
+    createStars(starsPerLayer);
+  }, 1000);
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    staticStars = [];
+    drawStaticStars();
+  });
+
+
+
+const fadeOutDuration = 2;  // Czas trwania animacji fade-out (w sekundach)
+
+// Funkcja do uruchomienia fade-out i przejścia do nowej strony
+function fadeOutAndRedirect(link) {
+  // Tworzymy animację fade-out
+  gsap.to('body', {
+    opacity: 0,
+    duration: fadeOutDuration,
+    onComplete: () => {
+      window.location.href = link;  // Po zakończeniu animacji do nowej strony
+    }
+  });
+}
+
+// Obsługa kliknięć w linki
+document.querySelectorAll('.links a').forEach(link => {  // Dostosowane do linków w .links
+  link.addEventListener('click', function(event) {
+    event.preventDefault();  // Zatrzymanie domyślnego działania linku
+    fadeOutAndRedirect(this.href);  // Uruchamiamy animację i przekierowanie
+  });
+});
+
+
+  function checkDevice() {
+    const video = document.getElementById("video");
+    const gif = document.getElementById("gif");
+
+    if (window.innerWidth <= 768) { // Jeśli ekran <= 768px (telefon)
+      video.style.display = "none"; // Ukryj wideo
+      gif.style.display = "block";  // Pokaż GIF
+    }
+  }
+
+  window.addEventListener("load", checkDevice);
+  window.addEventListener("resize", checkDevice);
+
+
+window.addEventListener("pageshow", function(event) {
+  if (event.persisted) { // Sprawdź, czy strona została załadowana z cache
+    // Resetowanie animacji dla całej strony
+    const body = document.body;
+    body.style.animation = "none";
+    void body.offsetWidth; // Wymuszenie reflow
+    body.style.animation = "fadeIn 6.9s";
+
+    // Resetowanie animacji dla video-container
+    const videoContainer = document.querySelector('.video-container');
+    if (videoContainer) {
+      videoContainer.style.animation = "none";
+      void videoContainer.offsetWidth; // Wymuszenie reflow
+      videoContainer.style.animation = "fadeIn 1.5s ease-in-out 7s forwards";
+    }
+
+    // Resetowanie animacji dla gif-element
+    const gifElement = document.querySelector('.gif-element');
+    if (gifElement) {
+      gifElement.style.animation = "none";
+      void gifElement.offsetWidth; // Wymuszenie reflow
+      gifElement.style.animation = "fadeIn 1.5s ease-in-out 7s forwards";
+    }
+
+    // Resetowanie animacji dla canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawStaticStars(); // Odzyskanie gwiazd
+  }
+});
+
+// Funkcja do resetowania animacji i stanu strony
+function resetPageAnimations() {
+  // Resetowanie animacji dla body
+  const body = document.body;
+  body.style.animation = "none";
+  void body.offsetWidth; // Wymuszenie reflow
+  body.style.animation = "fadeIn 6.9s";
+
+  // Resetowanie animacji dla video-container
+  const videoContainer = document.querySelector('.video-container');
+  if (videoContainer) {
+    videoContainer.style.animation = "none";
+    void videoContainer.offsetWidth; // Wymuszenie reflow
+    videoContainer.style.animation = "fadeIn 1.5s ease-in-out 7s forwards";
+  }
+
+  // Resetowanie animacji dla gif-element
+  const gifElement = document.querySelector('.gif-element');
+  if (gifElement) {
+    gifElement.style.animation = "none";
+    void gifElement.offsetWidth; // Wymuszenie reflow
+    gifElement.style.animation = "fadeIn 1.5s ease-in-out 7s forwards";
+  }
+
+  // Resetowanie animacji dla canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawStaticStars(); // Odzyskanie gwiazd
+}
+
+// Obsługa zdarzenia pageshow (np. po cofnięciu się w historii)
+window.addEventListener("pageshow", function(event) {
+  if (event.persisted) { // Sprawdź, czy strona została załadowana z cache
+    resetPageAnimations();
+  }
+});
+
+// Obsługa zdarzenia visibilitychange (np. gdy użytkownik wraca do zakładki)
+document.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === "visible") {
+    resetPageAnimations();
+  }
+});
+// Funkcja do resetowania stanu strony
+function resetPageState() {
+  console.log("Resetowanie stanu strony");
+
+  // Upewnij się, że strona jest widoczna
+  document.body.style.opacity = "1";
+  document.body.style.visibility = "visible";
+
+  // Resetuj animacje
+  const elements = document.querySelectorAll(".fade-in-element"); // Dodaj odpowiednią klasę
+  elements.forEach(element => {
+    element.style.animation = "none";
+    void element.offsetWidth; // Wymuszenie reflow
+    element.style.animation = "fadeIn 2s ease-in-out";
+  });
+}
+
+// Obsługa zdarzenia pageshow (np. po cofnięciu się w historii)
+window.addEventListener("pageshow", function(event) {
+  if (event.persisted) { // Sprawdź, czy strona została załadowana z cache
+    resetPageState();
+  }
+});
+
+// Obsługa zdarzenia visibilitychange (np. gdy użytkownik wraca do zakładki)
+document.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === "visible") {
+    resetPageState();
+  }
+});
+
+// Debugowanie: Sprawdź stan strony po 5 sekundach
+setTimeout(() => {
+  console.log("Sprawdzam stan strony po 5 sekundach");
+  console.log("Body opacity:", document.body.style.opacity);
+  console.log("Body visibility:", document.body.style.visibility);
+}, 5000);
+</script>
+
+
+</body>
+</html>

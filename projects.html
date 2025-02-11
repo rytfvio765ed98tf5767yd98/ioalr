@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <title>inside of a locked room</title>
+  <link rel='stylesheet' href='https://slater.app/10324/23333.css'>
+
+  <style>
+@font-face {
+  font-family: 'Swansea Regular';  
+  font-style: normal;  
+  font-weight: normal;  
+  src: local('Swansea Regular'), url('SWANSE__.woff') format('woff');  
+}
+
+body {
+  background-color: var(--color-neutral-900);
+  color: var(--color-light);
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-family: 'Swansea Regular', sans-serif;
+  overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: hidden;
+  animation: fadeIn 3s;
+}
+
+
+.title {
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+  color: var(--color-light);
+  font-family: 'Swansea Regular', sans-serif;
+  font-size: 48px;
+  letter-spacing: -.03em;
+  z-index: 1;
+  margin: 0;
+  line-height: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  
+}
+
+ @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+
+.cloneable {
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  font-size: 1vw;
+  color: var(--color-light);
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+p {
+  margin: 0px;
+}
+
+.page {
+  z-index: 0;
+  inset: var(--gap);
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.main {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap; 
+}
+
+.main-col {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 12vw;
+  text-align: center;
+}
+
+.main-img__list {
+  margin: 0 auto;
+  width: 80%;
+  height: auto;
+  position: relative;
+}
+
+.main-img__item {
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.main-title__list {
+  flex-flow: column;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  position: relative;
+}
+
+    .main-title__list li:nth-child(2) .main-title {
+      font-size: 27px;
+      color: var(--color-neutral-500); /* Grey color */
+      transition: color 0.2s;
+    }
+
+    .main-title__list li:nth-child(2):hover .main-title {
+      color: var(--color-light); /* White on hover */
+    }
+
+    .main-title__list li:nth-child(2) .main-title__item {
+      height: 45px;
+      font-size: 27px;
+    }
+
+    .main-title__list li:nth-child(2):hover .main-title__item::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -.3em;
+      width: 0.75em;
+      height: 0.15em;
+      border-radius: 100em;
+      background: currentColor;
+      opacity: 0;
+      transition: all 0.525s var(--cubic-default);
+      transform: translate(100%, 0%) scale(0);
+    }
+
+    .main-title__list li:nth-child(2):hover .main-title__item::after {
+      transform: translate(0%, 0%) scale(1);
+      opacity: 1;
+      width: 0.15em;
+    }
+
+.main-title__item {
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  font-size: 36px;
+  transition: opacity .2s;
+  display: flex;
+  position: relative;
+  animation: blink 0.5s
+}
+
+.main-title {
+  font-family: 'Swansea Regular', sans-serif;
+  letter-spacing: -.03em;
+  white-space: nowrap;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-light);
+  position: relative;
+}
+
+.main-title__item::after {
+  content: "✦";
+  position: absolute;
+  top: 40%;
+  left: -.8em;
+  width: 1em;
+  height: 0.15em;
+  border-radius: 150em;
+  background: currentColor;
+  opacity: 0;
+  transition: all 0.525s var(--cubic-default);
+  transform: translate(100%, 0%) scale(0);
+}
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0.9;
+      }
+    }
+
+.main-title__item:hover::after {
+  transform: translate(0%, 0%) scale(1);
+  opacity: 1;
+  width: 0.15em;
+}
+
+.main-title__list:hover:has(.main-title__item:hover) .main-title__item:not(:hover) {
+  opacity: 0.45;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.button.text {
+  transition: opacity .2s;
+}
+
+.button.text:hover {
+  opacity: .7;
+}
+
+.media-container {
+  position: absolute;
+  top: 50%;
+  left: 5vw;
+  transform: translateY(-50%);
+  width: 20vw;
+  height: 20vw;
+  background-color: #000000;
+  border-radius: .5em;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.media-container video {
+  width: 100%; /* Skalowanie wideo w obrębie kontenera */
+  height: auto; /* Zachowanie proporcji */
+  object-fit: cover; /* Przycięcie wideo w razie potrzeby */
+}
+
+.media-container .gif {
+  display: none;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+@media (min-width: 1201px) {
+  .cloneable {
+    font-size: 0.5vw;
+  }
+}
+
+@media (max-width: 1200px) {
+  .media-container {
+    width: 30vw;
+    height: 30vw;
+  }
+}
+
+
+
+
+    :root {
+      --bg: #000000;
+      --clr-1: #404040;
+      --clr-2: #909090;
+      --clr-3: #696969;
+      --clr-4: #FFFFFF;
+
+      --blur: 1.5rem;
+      --fs: 1.5rem;
+    }
+
+    .title {
+      font-size: var(--fs);
+      font-weight: 800;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      margin: 0;
+      color: white;
+      text-align: center;
+  
+    }
+
+.title {
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+  color: var(--color-light);
+  font-family: 'Swansea Regular', sans-serif;
+  font-size: 48px;
+  letter-spacing: -.03em;
+  z-index: 1;
+  margin: 0;
+  line-height: 1;
+  font-weight: 500;
+  White-space: nowrap;
+}
+
+    .aurora {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      mix-blend-mode: darken;
+      pointer-events: none;
+    }
+
+    .aurora__item {
+      overflow: hidden;
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      background-color: var(--clr-1);
+      border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+      filter: blur(var(--blur));
+      mix-blend-mode: overlay;
+    }
+
+    .aurora__item:nth-of-type(1) {
+      top: -50%;
+      animation: aurora-border 1s ease-in-out infinite,
+        aurora-1 3s ease-in-out infinite alternate;
+    }
+
+    .aurora__item:nth-of-type(2) {
+      background-color: var(--clr-3);
+      right: 0;
+      top: 0;
+      animation: aurora-border 1s ease-in-out infinite,
+        aurora-2 3s ease-in-out infinite alternate;
+    }
+
+    .aurora__item:nth-of-type(3) {
+      background-color: var(--clr-2);
+      left: 0;
+      bottom: 0;
+      animation: aurora-border 6s ease-in-out infinite,
+        aurora-3 3s ease-in-out infinite alternate;
+    }
+
+    .aurora__item:nth-of-type(4) {
+      background-color: var(--clr-4);
+      right: 0;
+      bottom: -50%;
+      animation: aurora-border 2s ease-in-out infinite,
+        aurora-4 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes aurora-1 {
+  0% { top: 0; right: 0; }
+  60% { top: 100%; right: 75%; } /* Zmniejsz liczbę kluczowych klatek */
+  100% { top: 0; right: 0; }
+}
+
+
+      50% {
+        top: 100%;
+        right: 75%;
+      }
+
+      75% {
+        top: 100%;
+        right: 25%;
+      }
+
+      100% {
+        top: 0;
+        right: 0;
+      }
+    }
+
+    @keyframes aurora-2 {
+      0% {
+        top: -50%;
+        left: 0%;
+      }
+
+      60% {
+        top: 100%;
+        left: 75%;
+      }
+
+      85% {
+        top: 100%;
+        left: 25%;
+      }
+
+      100% {
+        top: -50%;
+        left: 0%;
+      }
+    }
+
+    @keyframes aurora-3 {
+      0% {
+        bottom: 0;
+        left: 0;
+      }
+
+      40% {
+        bottom: 100%;
+        left: 75%;
+      }
+
+      65% {
+        bottom: 40%;
+        left: 50%;
+      }
+
+      100% {
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    @keyframes aurora-4 {
+      0% {
+        bottom: -50%;
+        right: 0;
+      }
+
+      50% {
+        bottom: 0%;
+        right: 40%;
+      }
+
+      90% {
+        bottom: 50%;
+        right: 25%;
+      }
+
+      100% {
+        bottom: -50%;
+        right: 0;
+      }
+    }
+
+    @keyframes aurora-border {
+      0% {
+        border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+      }
+
+      25% {
+        border-radius: 47% 29% 39% 49% / 61% 19% 66% 26%;
+      }
+
+      50% {
+        border-radius: 57% 23% 47% 72% / 63% 17% 66% 33%;
+      }
+
+      75% {
+        border-radius: 28% 49% 29% 100% / 93% 20% 64% 25%;
+      }
+
+      100% {
+        border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+      }
+    }
+
+
+@media (max-width: 768px) {
+  /* Zmniejszamy font-size na małych ekranach */
+  .main-title {
+    font-size: 18px;  /* Zmniejsz czcionkę, aby zmieściła się w jednej linii */
+    white-space: nowrap;  /* Zapobiegaj zawijaniu tekstu */
+  }
+
+  .main-title__item {
+    font-size: 18px;  /* Dostosuj rozmiar czcionki dla mniejszych elementów */
+    text-align: left;  /* Wyrównaj tekst do lewej */
+  }
+
+  /* Zmniejszamy padding po lewej i prawej stronie, aby przybliżyć tekst */
+  .main-col {
+    padding-left: 2vw;  /* Mniejszy padding po lewej stronie */
+    padding-right: 2vw;  /* Mniejszy padding po prawej stronie */
+    width: auto;  /* Dostosuj szerokość do zawartości */
+    text-align: left;  /* Wyrównaj tekst do lewej */
+  }
+
+  .cloneable {
+    font-size: 3vw;  /* Mniejszy rozmiar czcionki dla całego kontenera */
+    width: 100%;  /* Kontener zajmuje pełną szerokość */
+  }
+
+  .main-img__list {
+    width: 100%;  /* Zmniejsz szerokość listy obrazów */
+  }
+
+  .media-container {
+    width: 40vw;  /* Zmniejsz kontener mediów */
+    height: 40vw;  /* Dopasuj wysokość proporcjonalnie */
+  }
+
+  /* Zmniejsz padding w liście tytułów, aby zmieściły się na małym ekranie */
+  .main-title__list {
+    padding-left: 0;  /* Usuń nadmiarowy padding */
+    padding-right: 0;  /* Usuń nadmiarowy padding */
+    width: 100%;  /* Kontener zajmuje pełną szerokość */
+    box-sizing: border-box;  /* Uwzględniaj padding w szerokości */
+  }
+
+  /* Zapewniamy, że tekst nie wychodzi poza kontener */
+  .main-title {
+    word-wrap: normal;  /* Wymuszenie nie łamania słów */
+    overflow: hidden;  /* Ukrycie nadmiarowego tekstu */
+    text-overflow: ellipsis;  /* Dodaj "..." jeśli tekst jest za długi */
+  }
+
+  /* Ukrycie poziomego scrolla */
+  body {
+    overflow-x: hidden;  /* Ukryj poziome przewijanie */
+  }
+
+  /* Dostosowanie odstępu tekstu do prawej krawędzi strony */
+  .main-title__list li:nth-child(2) .main-title {
+    font-size: 20px;  /* Zmniejsz rozmiar czcionki dla 'back to day one' */
+    color: var(--color-neutral-500);  /* Można dodać kolor, jeśli chcesz, żeby tekst był inny */
+    margin-right: 2vw;  /* Ustaw odstęp z prawej strony, aby był równy jak padding kontenera */
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+    .main-title__list li:nth-child(2):hover .main-title__item::after {
+	display: none;
+    }
+
+@media screen and (max-width: 768px) {
+  .media-container video {
+    display: none;
+  }
+  
+  .media-container .gif {
+    display: block;
+  }
+}
+
+
+
+  </style>
+</head>
+<body>
+  
+<h1 class="title">
+    projects
+    <div class="aurora">
+      <div class="aurora__item"></div>
+      <div class="aurora__item"></div>
+      <div class="aurora__item"></div>
+      <div class="aurora__item"></div>
+    </div>
+  </h1>
+
+<section class="cloneable">
+  <div class="page">
+    <div class="main">
+      <!-- Obrazy po lewej -->
+      <div class="main-col">
+        <div class="main-img__list">
+          <div class="main-img__item"><div class="image"></div></div>
+          <div class="main-img__item"><div class="image"></div></div>
+        </div>
+      </div>
+      
+      <!-- Tekst po prawej -->
+      <div class="main-col">
+        <ul class="main-title__list">
+<li class="main-title__item">
+  <a href="survivalmachines.html" class="main-title">
+    survival machines
+  </a>
+</li>
+<li class="main-title__item">
+  <a href="backtodayone1.html" class="main-title">
+    back to day one
+  </a>
+</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="media-container">
+  <video autoplay muted loop playsinline>
+    <source src="misc/visuals/visual-projects.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <img class="gif" src="misc/visuals/visual-projects.gif" alt="visual 2">
+</div>
+
+
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Flip.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js'></script>
+  
+  <script>
+    gsap.registerPlugin(CustomEase, Flip)
+    CustomEase.create("osmo-ease", "0.625, 0.05, 0, 1")
+
+    gsap.defaults({
+      ease:"osmo-ease",
+      duration: 0.725
+    })
+
+    document.addEventListener("DOMContentLoaded", () => {
+    
+      const listItems = document.querySelectorAll(".main-title__item");
+      const imageItems = document.querySelectorAll(".main-img__item");
+
+      listItems.forEach((listItem, i) => {
+        listItem.addEventListener("mouseenter", () => {
+          gsap.set(imageItems, { autoAlpha: 0 });
+          gsap.set(imageItems[i], { autoAlpha: 1 });
+        })   
+      })
+    })
+  </script>
+
+</body>
+</html>
