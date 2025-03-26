@@ -868,6 +868,59 @@ setTimeout(() => {
   console.log("Body visibility:", document.body.style.visibility);
 }, 5000);
 </script>
+<script>
+  const maxStars = 50; // Ograniczona liczba gwiazd dla lepszej wydajności
+  const staticStarCount = 25;
+
+  let staticStars = [];
+  const canvas = document.getElementById('background');
+  const ctx = canvas.getContext('2d');
+  
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function createStaticStars() {
+    for (let i = 0; i < staticStarCount; i++) {
+      staticStars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.2 + 0.3,
+        opacity: Math.random() * 0.5 + 0.3,
+      });
+    }
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    staticStars.forEach(star => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(drawStars);
+  }
+
+  function twinkleStars() {
+    staticStars.forEach(star => {
+      if (Math.random() > 0.7) {
+        star.opacity = Math.random() * 0.5 + 0.3;
+      }
+    });
+    setTimeout(twinkleStars, 200);
+  }
+
+  createStaticStars();
+  drawStars();
+  twinkleStars();
+</script>
 
 
 </body>
