@@ -6,6 +6,16 @@
   <title>maja braumberger | inside of a locked room</title>
   
   <style>
+    img {
+      position: absolute;
+      top: 90%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      font-size: 1.5rem;
+      z-index: 10;
+    }
     body {
       margin: 0;
       overflow: hidden;
@@ -16,7 +26,7 @@
       justify-content: space-between;
       font-family: Arial, sans-serif;
     }
-
+   
     #sky {
       position: absolute;
       top: 0;
@@ -69,7 +79,10 @@
   <div id="contact">
     <p>contact@majabraumberger.com</p>
   </div>
-
+<div class="img">
+  <img src="noweb32.gif" style="width:100px; text-align; center;">
+  </div>
+  
   <script>
     const canvas = document.getElementById('background');
     const ctx = canvas.getContext('2d');
@@ -176,4 +189,3 @@
   </script>
 </body>
 </html>
-
