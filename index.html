@@ -5,24 +5,15 @@
   <meta charset="UTF-8">
   <title>inside of a locked room</title>
   <style>
-    @font-face {
-      font-family: 'Swansea Regular';
-      font-style: normal;
-      font-weight: normal;
-      src: local('Swansea Regular'), url('SWANSE__.woff') format('woff');
-    }
 
-    @font-face {
-      font-family: 'MsPaintMouse';
-      src: url('mspaintmouse-regular-webfont.woff') format('woff');
-    }
+
 
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       background-color: #000;
-      font-family: 'Swansea Regular', 'MsPaintMouse', sans-serif;
+      font-family: sans-serif;
       color: #aaa;
       position: relative;
     }
@@ -35,11 +26,13 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 10;
 }
 
 .header-title {
   font-family: 'Swansea Regular', sans-serif;
   font-size: 24px;
+  font-weight: bold;
   color: #ffffff;
 }
 
@@ -48,7 +41,7 @@ header {
   font-size: 20px;
   color: #aaa;
   display: flex;
-  gap: 20px;
+  gap: 2px;
 }
 
 .header-links a {
@@ -102,17 +95,35 @@ header {
       color: rgb(93, 93, 93);
       font-family: sans-serif;
     }
+    .separator {
+  color: #aaa; 
+  font-size: 20px;
+  line-height: 1;
+  margin: 0 10px;
+  user-select: none; 
+  font-weight: bold;
+}
+
   </style>
 </head>
   
 <body>
-  <header>
-  <div class="header-title">inside of a locked room</div>
+<header>
+  <div style="display: flex; align-items: center; gap: 20px;">
+    <div class="header-title">inside of a locked room</div>
+    <nav class="header-links">
+      <a href="projects.html">projects</a>
+      <span class="separator">|</span>
+      <a href="writings.html">writings</a>
+    </nav>
+  </div>
   <nav class="header-links">
     <a href="contact.html">contact</a>
-    <a href="projects.html">projects</a>
+    <span class="separator">|</span>
+    <a href="newsletter.html">newsletter</a>
   </nav>
 </header>
+
 
   <div class="video-container">
     <video autoplay muted loop playsinline>
