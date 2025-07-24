@@ -98,7 +98,84 @@ header {
       color: rgb(93, 93, 93);
       font-family: sans-serif;
     }
-    .separator {
+
+}
+@media (max-width: 600px) {
+  .header-links {
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 24px;
+    gap: 7px;
+  }
+}
+.header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.header-links {
+  display: flex;
+  font-family: sans-serif;
+  font-size: 20px;
+  color: #ffffff;
+  gap: 1px;
+}
+
+.header-links a {
+  text-decoration: none;
+  color: #888;
+  transition: color 0.2s ease;
+}
+
+.header-links a:hover {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .menu-toggle {
+    display: block;
+  }
+
+.header-links {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  flex-direction: column;
+  background-color: #000;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.1);
+  z-index: 9999;
+}
+
+
+  .header-links.show {
+    display: flex;
+  }
+}
+.separator {
   color: #9b9b9b; 
   font-size: 20px;
   line-height: 1;
@@ -106,38 +183,38 @@ header {
   user-select: none; 
   font-weight: bold;
 }
-@media (max-width: 600px) {
-  .header-links {
-    flex-direction: column;
-    align-items: flex-end;
-    font-size: 24px;
-    gap: 6px;
-  }
 
+@media (max-width: 600px) {
   .separator {
     display: none;
   }
 }
 
+
   </style>
 </head>
   
 <body>
-<header>
-  <div style="display: flex; align-items: center; gap: 20px;">
+  
+<header class="header">
+  <div class="header-left">
     <div class="header-title">inside of a locked room</div>
-    <nav class="header-links">
-      <a href="projects.html">projects</a>
-      <span class="separator">|</span>
-      <a href="writings.html">writings</a>
-    </nav>
+    <button class="menu-toggle" aria-label="Menu">&#9776;</button>
   </div>
-  <nav class="header-links">
-    <a href="contact.html">contact</a>
-    <span class="separator">|</span>
-    <a href="newsletter.html">newsletter</a>
-  </nav>
+  
+<nav class="header-links" id="mobileMenu">
+  <a href="projects.html">projects</a>
+  <span class="separator">|</span>
+  <a href="writings.html">writings</a>
+  <span class="separator">|</span>
+  <a href="contact.html">contact</a>
+  <span class="separator">|</span>
+  <a href="newsletter.html">newsletter</a>
+</nav>
+
 </header>
+
+
 
 
   <div class="video-container">
@@ -151,6 +228,11 @@ header {
     <div class="copyright">© 2025 maja braumberger</div>
   </footer>
   
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', function () {
+    document.getElementById('mobileMenu').classList.toggle('show');
+  });
+</script>
 
 </body>
 </html>
