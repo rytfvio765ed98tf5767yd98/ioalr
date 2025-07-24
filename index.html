@@ -1,191 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="favicon.png" type="image/png">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>maja braumberger | inside of a locked room</title>
-  
+  <title>inside of a locked room</title>
   <style>
-    img {
-      position: absolute;
-      top: 90%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      font-size: 1.5rem;
-      z-index: 10;
+    @font-face {
+      font-family: 'Swansea Regular';
+      font-style: normal;
+      font-weight: normal;
+      src: local('Swansea Regular'), url('SWANSE__.woff') format('woff');
     }
-    body {
+
+    @font-face {
+      font-family: 'MsPaintMouse';
+      src: url('mspaintmouse-regular-webfont.woff') format('woff');
+    }
+
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #000;
+      font-family: 'Swansea Regular', 'MsPaintMouse', sans-serif;
+      color: #aaa;
+      position: relative;
+    }
+    
+header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-family: 'Swansea Regular', sans-serif;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.header-links {
+  font-family: 'MsPaintMouse', sans-serif;
+  font-size: 20px;
+  color: #aaa;
+  display: flex;
+  gap: 20px;
+}
+
+.header-links a {
+  text-decoration: none;
+  color: #aaa;
+  transition: color 0.2s ease;
+}
+
+.header-links a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+
+    .video-container {
+      width: 320px;
+      height: 240px;
+      border-radius: 10px;
       overflow: hidden;
-      background-color: black;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      font-family: Arial, sans-serif;
-    }
-   
-    #sky {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    #text-container {
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      font-size: 1.5rem;
-      z-index: 10;
     }
 
-    #contact {
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    footer {
       position: absolute;
-      bottom: 280px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.46);
-      font-size: 0.9rem;
-      z-index: 10;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
     }
 
+    .logo {
+      width: 69px;
+      height: auto;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    .copyright {
+      font-size: 10px;
+      color: rgb(93, 93, 93);
+      font-family: sans-serif;
+    }
   </style>
 </head>
-<body>
-  <div id="sky"></div>
-
-  <canvas id="background"></canvas>
-
-  <div id="text-container">
-    <p>bizarre little thing walking back and forth unveiled in light's feverish dreams, in all glory of life</p>
-
-  </div>
-
-  <div id="contact">
-    <p>contact@majabraumberger.com</p>
-  </div>
-<div class="img">
-  <img src="noweb32.gif" style="width:100px; text-align; center;">
-  </div>
   
-  <script>
-    const canvas = document.getElementById('background');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+<body>
+  <header>
+  <div class="header-title">inside of a locked room</div>
+  <nav class="header-links">
+    <a href="contact.html">contact</a>
+    <a href="projects.html">projects</a>
+  </nav>
+</header>
 
-    const maxStars = 100;
-    const staticStarCount = 30;
-    let staticStars = [];
-    let movingStars = [];
+  <div class="video-container">
+    <video autoplay muted loop playsinline>
+      <source src="index.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
-    // Klasa dla gwiazd ruchomych
-    class MovingStar {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 1.5 + 0.5;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.opacity = Math.random() * 0.5 + 0.3;
-      }
-
-      // Rysowanie gwiazdy
-      draw() {
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // Aktualizacja pozycji gwiazdy
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // Przewinięcie gwiazdy z powrotem na ekranie
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-
-        this.draw();
-      }
-    }
-
-    // Rysowanie statycznych gwiazd
-    function drawStaticStars() {
-      for (let i = 0; i < staticStarCount; i++) {
-        const star = {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 0.5 + 0.3,
-          opacity: Math.random() * 0.5 + 0.3
-        };
-        staticStars.push(star);
-      }
-
-      staticStars.forEach(star => {
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    // Animowanie ruchu gwiazd
-    function animateStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Rysowanie i animowanie statycznych gwiazd
-      staticStars.forEach(star => {
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Rysowanie i animowanie ruchomych gwiazd
-      movingStars.forEach(star => star.update());
-
-      requestAnimationFrame(animateStars); // Animacja na nowo
-    }
-
-    // Tworzenie gwiazd
-    function createStars() {
-      while (movingStars.length < maxStars) {
-        movingStars.push(new MovingStar());
-      }
-    }
-
-    createStars();
-    animateStars();
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      staticStars = [];
-      movingStars = [];
-
-      drawStaticStars();
-      createStars();
-    });
-  </script>
+  <footer>
+    <img class="logo" src="logo.png" alt="Logo" />
+    <div class="copyright">© 2025 maja braumberger</div>
+  </footer>
 </body>
 </html>
