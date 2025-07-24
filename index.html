@@ -93,13 +93,13 @@
           }
         });
 
-        // Occasionally mutate character
+       
         if (Math.random() < 0.03) {
           cell.textContent = chars[Math.floor(Math.random() * chars.length)];
         }
       });
 
-      activePoints = [...activePoints, ...newActive].slice(-200); // limit memory
+      activePoints = [...activePoints, ...newActive].slice(-200);
       requestAnimationFrame(spread);
     }
 
