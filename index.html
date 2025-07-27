@@ -7,103 +7,133 @@
   <link rel="icon" href="favicon.png" type="image/png">
   <meta charset="UTF-8">
   <title>inside of a locked room</title>
-   <style>
-    body {
+  <style>
+    html, body {
       margin: 0;
       background: #000;
-      color: #ccc;
-      font-family: monospace;
-      font-size: 13px;
       overflow: hidden;
     }
-
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, 10px);
-      line-height: 10px;
-    }
-
-    .cell {
-      width: 10px;
-      height: 10px;
-      text-align: center;
-      color: #888;
-      opacity: 0.1;
-      transition: opacity 0.1s linear;
-    }
-
-    .active {
-      color: #fff;
-      opacity: 1;
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div id="grid"></div>
+<canvas id="canvas"></canvas>
 
-  <script>
-    const cols = Math.floor(window.innerWidth / 10);
-    const rows = Math.floor(window.innerHeight / 10);
-    const grid = document.getElementById('grid');
-    const chars = ['░', '▒', '▓', '█', '.', ':', '+', '*', '#'];
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
 
-    let cells = [];
+  const cellSize = 10;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const cols = Math.floor(canvas.width / cellSize);
+  const rows = Math.floor(canvas.height / cellSize);
+
+  const grid = Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => ({ active: false, age: 0 }))
+  );
+
+  const chars = ['░', '▒', '▓', '█', '.', ':', '+', '*', '#'];
+  ctx.font = `${cellSize - 1}px monospace`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  let activePoints = [];
+  const centerX = Math.floor(cols / 2);
+  const centerY = Math.floor(rows / 2);
+  grid[centerY][centerX].active = true;
+  activePoints.push([centerX, centerY]);
+
+  let nearbySeedAdded = false;
+
+  function drawCell(x, y, age) {
+    const char = chars[Math.floor(Math.random() * chars.length)];
+    const fade = Math.pow(Math.max(0, 1 - age * 0.005), 1.5);
+    ctx.fillStyle = `rgba(255,255,255,${fade})`;
+    ctx.fillText(char, x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+  }
+
+  function addNearbySeed() {
+    const radius = 5;
+    for (let i = 0; i < 100; i++) {
+      const dx = Math.floor(Math.random() * (radius * 2 + 1)) - radius;
+      const dy = Math.floor(Math.random() * (radius * 2 + 1)) - radius;
+      const nx = centerX + dx;
+      const ny = centerY + dy;
+      if (
+        nx >= 0 && ny >= 0 &&
+        nx < cols && ny < rows &&
+        !grid[ny][nx].active
+      ) {
+        grid[ny][nx].active = true;
+        grid[ny][nx].age = 1;  // ustawiamy wiek na 1, żeby rozprzestrzenianie było szybsze
+        activePoints.push([nx, ny]);
+        console.log("Dodano punkt blisko centrum:", nx, ny);
+        break;
+      }
+    }
+  }
+
+  function spread() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let newPoints = [];
+
+    activePoints.forEach(([x, y]) => {
+      const neighbors = [
+        [x + 1, y], [x - 1, y],
+        [x, y + 1], [x, y - 1],
+        [x + 1, y + 1], [x - 1, y - 1],
+        [x - 1, y + 1], [x + 1, y - 1]
+      ];
+
+      neighbors.forEach(([nx, ny]) => {
+        if (
+          nx >= 0 && ny >= 0 &&
+          nx < cols && ny < rows &&
+          !grid[ny][nx].active
+        ) {
+          // wyższe prawdopodobieństwo rozprzestrzeniania dla młodych punktów
+          const prob = grid[y][x].age === 0 ? 0.06 : 0.02;
+          if (Math.random() < prob) {
+            grid[ny][nx].active = true;
+            grid[ny][nx].age = 0;
+            newPoints.push([nx, ny]);
+          }
+        }
+      });
+    });
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
-        const span = document.createElement('span');
-        span.classList.add('cell');
-        span.dataset.x = x;
-        span.dataset.y = y;
-        span.textContent = ' ';
-        grid.appendChild(span);
-        cells.push(span);
+        if (grid[y][x].active) {
+          drawCell(x, y, grid[y][x].age);
+          grid[y][x].age += 0.5;
+        }
       }
     }
 
-    // Seed
-    let activePoints = [];
-    const center = Math.floor(rows / 2) * cols + Math.floor(cols / 2);
-    cells[center].classList.add('active');
-    cells[center].textContent = chars[Math.floor(Math.random() * chars.length)];
-    activePoints.push(cells[center]);
+    activePoints = [...activePoints, ...newPoints].slice(-500);
 
-    function spread() {
-      let newActive = [];
-
-      activePoints.forEach(cell => {
-        const x = parseInt(cell.dataset.x);
-        const y = parseInt(cell.dataset.y);
-        const neighbors = [
-          [x + 1, y], [x - 1, y],
-          [x, y + 1], [x, y - 1],
-          [x + 1, y + 1], [x - 1, y - 1],
-          [x - 1, y + 1], [x + 1, y - 1]
-        ];
-
-        neighbors.forEach(([nx, ny]) => {
-          if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) return;
-          const idx = ny * cols + nx;
-          const neighbor = cells[idx];
-
-          if (!neighbor.classList.contains('active') && Math.random() < 0.04) {
-            neighbor.classList.add('active');
-            neighbor.textContent = chars[Math.floor(Math.random() * chars.length)];
-            newActive.push(neighbor);
-          }
-        });
-
-       
-        if (Math.random() < 0.03) {
-          cell.textContent = chars[Math.floor(Math.random() * chars.length)];
-        }
-      });
-
-      activePoints = [...activePoints, ...newActive].slice(-200);
-      requestAnimationFrame(spread);
+    if (!nearbySeedAdded) {
+      const ages = activePoints.map(([x, y]) => grid[y][x].age);
+      const maxAge = Math.max(...ages);
+      if (maxAge > 5) {
+        addNearbySeed();
+        nearbySeedAdded = true;
+      }
     }
 
-    spread();
-  </script>
+    requestAnimationFrame(spread);
+  }
+
+  spread();
+</script>
+
 </body>
 </html>
+
